@@ -9,3 +9,12 @@ This template should help get you started developing with Vue 3 and Typescript i
 ## Type Support For `.vue` Imports in TS
 
 Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's `.vue` type support plugin by running `Volar: Switch TS Plugin on/off` from VSCode command palette.
+
+## problem records
+
+- 如何单独将dist文件推送到一个新的分支（gh-pages）
+
+  git subtree push --prefix dist origin gh-pages
+  参考博客：
+  https://segmentfault.com/a/1190000012002151
+  https://blog.csdn.net/weixin_44717047/article/details/120113869

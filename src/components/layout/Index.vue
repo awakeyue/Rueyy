@@ -1,137 +1,46 @@
 <template >
-  <div>
-    <n-menu v-model:value="activeKey" mode="horizontal" :options="menuOptions" />
-    <n-carousel autoplay>
-      <img
-        class="carousel-img"
-        src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel1.jpeg"
-      />
-      <img
-        class="carousel-img"
-        src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel2.jpeg"
-      />
-      <img
-        class="carousel-img"
-        src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel3.jpeg"
-      />
-      <img
-        class="carousel-img"
-        src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel4.jpeg"
-      />
-    </n-carousel>
-  </div>
+  <n-layout>
+    <n-layout-header bordered>
+      Logo
+      <n-menu mode="horizontal" :options="menuOptions" />
+      <router-view></router-view>
+    </n-layout-header>
+    <n-card>
+      <n-space>
+        <n-button @click="setTheme('dark')">深色</n-button>
+        <n-button @click="setTheme('light')">浅色</n-button>
+      </n-space>
+    </n-card>
+  </n-layout>
 </template>
 
 <script lang="ts">
-import { defineComponent, h, ref } from 'vue'
-import { NIcon } from 'naive-ui'
-import {
-  BookOutline as BookIcon,
-  PersonOutline as PersonIcon,
-  WineOutline as WineIcon
-} from '@vicons/ionicons5'
-
-function renderIcon (icon) {
-  return () => h(NIcon, null, { default: () => h(icon) })
-}
-
+import { defineComponent } from 'vue'
+import { useStore } from 'vuex'
 const menuOptions = [
   {
-    label: () =>
-      h(
-        'a',
-        {
-          href: 'https://baike.baidu.com/item/%E4%B8%94%E5%90%AC%E9%A3%8E%E5%90%9F',
-          target: '_blank',
-          rel: 'noopenner noreferrer'
-        },
-        '且听风吟'
-      ),
-    key: 'hear-the-wind-sing',
-    icon: renderIcon(BookIcon)
+    label: '首页',
+    key: '1',
   },
   {
-    label: '1973年的弹珠玩具',
-    key: 'pinball-1973',
-    icon: renderIcon(BookIcon),
-    disabled: true,
-    children: [
-      {
-        label: '鼠',
-        key: 'rat'
-      }
-    ]
-  },
-  {
-    label: '寻羊冒险记',
-    key: 'a-wild-sheep-chase',
-    icon: renderIcon(BookIcon),
-    disabled: true
-  },
-  {
-    label: '舞，舞，舞',
-    key: 'dance-dance-dance',
-    icon: renderIcon(BookIcon),
-    children: [
-      {
-        type: 'group',
-        label: '人物',
-        key: 'people',
-        children: [
-          {
-            label: '叙事者',
-            key: 'narrator',
-            icon: renderIcon(PersonIcon)
-          },
-          {
-            label: '羊男',
-            key: 'sheep-man',
-            icon: renderIcon(PersonIcon)
-          }
-        ]
-      },
-      {
-        label: '饮品',
-        key: 'beverage',
-        icon: renderIcon(WineIcon),
-        children: [
-          {
-            label: '威士忌',
-            key: 'whisky'
-          }
-        ]
-      },
-      {
-        label: '食物',
-        key: 'food',
-        children: [
-          {
-            label: '三明治',
-            key: 'sandwich'
-          }
-        ]
-      },
-      {
-        label: '过去增多，未来减少',
-        key: 'the-past-increases-the-future-recedes'
-      }
-    ]
+    label: '关于',
+    key: '2',
   }
 ]
 export default defineComponent({
+  name: 'Layout',
   setup () {
+    const store = useStore()
     return {
-      activeKey: ref(null),
-      menuOptions
+      menuOptions,
+      setTheme(theme: string) {
+        store.commit('SET_THEME', theme)
+      }
     }
   }
 })
 </script>
 
 <style lang="css">
-.carousel-img {
-  width: 100%;
-  height: 400px;
-  object-fit: cover;
-}
+
 </style>

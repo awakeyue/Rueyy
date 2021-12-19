@@ -6,3 +6,8 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+interface ImportMetaEnv {
+  // 自定义环境变量智能提示
+  readonly VITE_APP_TITLE: string
+}

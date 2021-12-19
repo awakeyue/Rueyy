@@ -8,6 +8,7 @@ export default {
   },
   mutations: {
     SET_THEME(state: any, theme: string) {
+      console.log(theme, 'index')
       state.theme = theme
       sessionStorage.setItem('N_THEME', theme)
     }

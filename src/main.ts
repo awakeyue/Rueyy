@@ -28,4 +28,4 @@ app.use(router)
 app.use(naive)
 setTimeout(() => {
   app.mount('#app')
-}, 0)
+}, 1000)

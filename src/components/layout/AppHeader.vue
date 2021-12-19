@@ -19,8 +19,9 @@ export default defineComponent({
   },
   setup () {
     const store = useStore()
-    const theme = ref(store.state.app.theme === 'light')
+    const theme = ref(store.state.app.theme !== 'dark')
     watch(theme, val => {
+      console.log(val)
       store.commit('SET_THEME', val ? 'light' : 'dark')
     })
     return {

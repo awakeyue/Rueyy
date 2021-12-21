@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw  } from 'vue-router'
+import { createRouter, createWebHashHistory, RouteRecordRaw  } from 'vue-router'
 const { BASE_URL } = import.meta.env // BASE_URL对应github pages仓库名
 const routes: Array<RouteRecordRaw> = [
   {
@@ -13,7 +13,7 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(BASE_URL),
+  history: createWebHashHistory(BASE_URL),
   routes
 })
 

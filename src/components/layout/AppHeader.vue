@@ -1,6 +1,6 @@
 <template>
    <div class="app-header">
-     <Logo /> 
+     <m-logo /> 
      <n-switch v-model:value="theme" :rail-style="railStyle">
         <template #checked>light</template>
         <template #unchecked>dark</template>
@@ -11,11 +11,11 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from 'vue'
 import { useStore } from 'vuex'
-import Logo from '@cmp/layout/Logo.vue'
+import MLogo from '@cmp/layout/Logo.vue'
 export default defineComponent({
   name: 'AppHeader',
   components: {
-    Logo
+    MLogo
   },
   setup () {
     const store = useStore()
@@ -48,7 +48,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .app-header {
-  width: 1200px;
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;

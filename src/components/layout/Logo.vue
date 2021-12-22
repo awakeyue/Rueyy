@@ -1,14 +1,6 @@
 <template>
   <div class="logo">
     <svg width="180" height="50" xmlns="http://www.w3.org/2000/svg">
-      <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
-      <!-- <g>
-        <title>background</title>
-        <rect :fill="theme === 'dark' ? '#000' : '#fff'" id="canvas_background" height="52" width="182" y="-1" x="-1"/>
-        <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
-        <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
-        </g>
-      </g> -->
       <g>
         <title>Layer 1</title>
         <!-- <path stroke="#000" transform="rotate(-64.74593353271484 76.47813415527345,43.183990478515625) " id="svg_47" d="m72.661069,31.386396c-1.192422,-0.075262 -3.338714,1.054292 -2.860142,-0.876356c0.829651,-1.184845 3.075948,-0.621509 2.820599,0.75924l0.029161,0.086368l0.010381,0.030747l0,0zm2.884188,-2.56108c-1.138101,1.606392 -3.70214,1.721268 -5.627376,2.319551c-0.891682,0.421461 -4.506713,0.695366 -3.130212,-0.591307c1.965726,-1.073748 4.383489,-1.332933 6.596675,-1.918436c0.712592,-0.138003 1.539176,-0.192182 2.160912,0.190192zm-5.886419,1.69889c-0.868184,-2.455458 -1.736364,-4.910912 -2.604546,-7.36637c1.062081,-1.190524 3.403729,-0.674244 3.079325,0.912697c0.674967,1.908984 1.349932,3.817975 2.024896,5.726964m-0.935455,1.29201c3.792174,10.950574 8.202026,21.77243 13.712705,32.222769m-12.711425,-32.507659c3.830897,10.305294 7.751415,20.6214 13.039401,30.495074c0.072788,0.765003 2.487644,3.058644 0.298336,2.466811c-0.680803,-0.268836 -1.843538,-0.08604 -1.969653,-0.874762c-5.1659,-10.288106 -9.644862,-20.809822 -13.429552,-31.497916" fill-opacity="null" stroke-opacity="null" fill="#fff"/> -->
@@ -59,11 +51,23 @@ export default defineComponent({
         targets: ['#svg_44'],
         translateY: -2,
         strokeWidth: [1, 2],
-        stroke: theme.value === 'dark' ? ['#000', '#fff'] : ['#fff', '#000'], 
+        strokeDashoffset: [anime.setDashoffset, 0],
         duration: 1000,
-        easing: 'linear',
-        direction: 'alternate',
-        loop: true
+        easing: 'easeInOutSine',
+        direction: 'alternate'
+      })
+      tl.add({
+        targets: ['#svg_34'],
+        translateY: [-100, 0],
+        duration: 1000,
+        direction: 'reverse'
+      })
+      tl.add({
+        targets: ['#svg_34'],
+        rotate: 10,
+        fontSize: 20,
+        delay: -1000,
+        duration: 1000
       })
       tl.finished.then(() => {
         anime({
@@ -71,22 +75,8 @@ export default defineComponent({
           duration: 1000
         })
       })
-      const ani = anime({
-        targets: ['#svg_34'],
-        translateY: -100,
-        duration: 1000,
-        direction: 'reverse',
-      }).finished.then(() => {
-        anime({
-          targets: ['#svg_34'],
-          rotate: 10,
-          fontSize: 20,
-          duration: 1000
-        })
-      })
       watch(theme, () => {
-        // tl.restart()
-        // ani.restart()
+        tl.restart()
       })
     })
     return {
@@ -97,6 +87,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.logo {
+  padding-top: 5px;
+}
 .logo svg {
   // width: 200px;
   // height: 50px;

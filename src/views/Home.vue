@@ -45,7 +45,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-$header-height: 50px;
+$header-height: 60px;
 $footer-height: 0;
 .layout-header {
   height: $header-height;

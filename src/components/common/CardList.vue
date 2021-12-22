@@ -23,6 +23,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+// import { getWisdom } from '@/api/index'
 export default defineComponent({
   name: 'CardList',
   setup () {

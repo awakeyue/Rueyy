@@ -15,11 +15,13 @@ import {
   NCard,
   NEl,
   NIcon,
-  NSwitch
+  NSwitch,
+  NGrid,
+  NGridItem
 } from 'naive-ui'
 
 const naive = create({
-  components: [NConfigProvider, NButton, NCarousel, NMenu, NSpace, NCard, NEl, NIcon, NSwitch]
+  components: [NConfigProvider, NButton, NCarousel, NMenu, NSpace, NCard, NEl, NIcon, NSwitch, NGrid, NGridItem]
 })
 
 const app = createApp(App)

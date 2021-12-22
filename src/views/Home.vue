@@ -1,11 +1,12 @@
 <template>
   <n-layout content-style="height: 100vh;">
     <n-layout-header class="layout-header" bordered>
-      <AppHeader />
+      <app-header></app-header>
     </n-layout-header>
     <n-layout-content :native-scrollbar="false" class="layout-content" content-style="padding: 24px;">
-      两天啊
-      <router-view></router-view>
+      <div class="layout-content-inner" :style="{'max-width': width + 'px'}">
+        <card-list></card-list>
+      </div>
     </n-layout-content>
     <!-- <n-layout-footer  class="layout-footer" bordered></n-layout-footer> -->
   </n-layout>
@@ -14,6 +15,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import AppHeader from '@cmp/layout/AppHeader.vue'
+import CardList from '@cmp/common/CardList.vue'
 import { 
   NLayout,
   NLayoutHeader,
@@ -30,7 +32,8 @@ export default defineComponent({
     NLayoutHeader,
     NLayoutContent,
     NLayoutFooter,
-    AppHeader
+    AppHeader,
+    CardList
   },
   setup() {
     return {
@@ -50,6 +53,9 @@ $footer-height: 0;
 }
 .layout-content {
   height: calc(100vh - $header-height - $footer-height);
+  &-inner {
+    margin: 0 auto;
+  }
 }
 .layout-footer {
   height: $footer-height;

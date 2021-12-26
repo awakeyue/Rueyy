@@ -1,7 +1,5 @@
 # Vue 3 + Typescript + Vite
 
-This template should help get you started developing with Vue 3 and Typescript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
-
 ## problem records
 
 - 如何单独将dist文件推送到一个新的分支（gh-pages）
@@ -32,3 +30,7 @@ This template should help get you started developing with Vue 3 and Typescript i
       }
     }
   ```
+
+- ts中如何引入js？
+
+  比如有的vue组件不想要js, 将script lang=“js”，但是vscode插件volar会提示，这时可以在 ts.config.json 中添加 allowJs: true

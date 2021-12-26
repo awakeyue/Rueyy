@@ -11,7 +11,7 @@ document.title = import.meta.env.VITE_APP_TITLE // 设置标签名
 
 const store = useStore()
 const theme = computed(() => store.getters.theme)
-console.log(theme.value)
+
 </script>
 
 <style>

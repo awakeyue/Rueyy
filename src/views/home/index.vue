@@ -3,8 +3,9 @@
     <n-layout-header class="layout-header" bordered>
       <app-header></app-header>
     </n-layout-header>
-    <n-layout-content :native-scrollbar="false" class="layout-content" content-style="padding: 24px;">
+    <n-layout-content :native-scrollbar="false" class="layout-content" :class="{'custome-bg': theme === 'light'}" content-style="padding: 24px;">
       <div class="layout-content-inner" :style="{'max-width': width + 'px'}">
+        <search-box></search-box>
         <card-list></card-list>
       </div>
     </n-layout-content>
@@ -13,18 +14,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, computed } from 'vue'
 import AppHeader from '@cmp/layout/AppHeader.vue'
-import CardList from '@cmp/common/CardList.vue'
+import CardList from './components/CardList.vue'
+import SearchBox from './components/SearchBox.vue'
 import { 
   NLayout,
   NLayoutHeader,
   NLayoutContent,
   NLayoutFooter
 } from 'naive-ui'
-import Layout from '@cmp/layout/index.vue'
-
-
+import { useStore } from 'vuex'
 export default defineComponent({
   name: 'Home',
   components: {
@@ -33,11 +33,14 @@ export default defineComponent({
     NLayoutContent,
     NLayoutFooter,
     AppHeader,
-    CardList
+    CardList,
+    SearchBox
   },
   setup() {
+    const store = useStore()
     return {
-      width: 1200
+      width: 1200,
+      theme: computed(() => store.state.app.theme)
     }
   }
 })
@@ -46,7 +49,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 $header-height: 60px;
-$footer-height: 0;
+$footer-height: 0px;
 .layout-header {
   height: $header-height;
   box-sizing: border-box;
@@ -56,6 +59,9 @@ $footer-height: 0;
   &-inner {
     margin: 0 auto;
   }
+}
+.custome-bg {
+  background-color: #f5f5f5;
 }
 .layout-footer {
   height: $footer-height;

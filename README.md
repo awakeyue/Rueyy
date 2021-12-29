@@ -34,3 +34,7 @@
 - ts中如何引入js？
 
   比如有的vue组件不想要js, 将script lang=“js”，但是vscode插件volar会提示，这时可以在 ts.config.json 中添加 allowJs: true
+  
+- 使用vue3时，对对象数组进行push时报错，TypeError: Cannot read property 'insertBefore' of null
+
+  这个报错就很诡异，明明写法没有问题，在codePen中验证也没有问题，偏偏在开发环境用chrome浏览器有问题，但是发布到线上就没有问题，在stackoverflow发现，有的插件会引起这个问题，然后我就试了下，还真是插件引起的，把所有插件重新启动一遍，发现问题没有了

@@ -72,7 +72,7 @@
 import { queryWeather, getLocation } from '@/api/index'
 import { LocationOutline as locIcon, ChevronForwardOutline as forwardIcon } from '@vicons/ionicons5'
 import { defineComponent, onMounted, reactive, computed, toRefs, ref } from 'vue'
-import { c, useMessage } from 'naive-ui'
+import { useMessage } from 'naive-ui'
 import echarts from '@/utils/charts'
 import { getTempOption } from '@/utils/chartsOptions'
 import weatherIcon1 from '@/assets/svg/weather/clear-day.svg'
@@ -212,7 +212,7 @@ export default defineComponent({
           lowTemp: parseInt(item.celsius.replace('℃', '').split('/')[1])
         }
       })
-      console.log(list)
+      echarts.dispose(document.getElementById('chart'))
       const chart = echarts.init(document.getElementById('chart'))
       const option = getTempOption(list)
       chart.setOption(option)

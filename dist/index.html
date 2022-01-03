@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/blog-vite/favicon.ico" />
+    <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
     <style>
@@ -61,9 +61,9 @@
         }
       }
     </style>
-    <script type="module" crossorigin src="/blog-vite/assets/index.82619b4a.js"></script>
-    <link rel="modulepreload" href="/blog-vite/assets/vendor.fc0e5ca9.js">
-    <link rel="stylesheet" href="/blog-vite/assets/index.6cff56b1.css">
+    <script type="module" crossorigin src="/assets/index.74fd4d6f.js"></script>
+    <link rel="modulepreload" href="/assets/vendor.5a2837c1.js">
+    <link rel="stylesheet" href="/assets/index.5cacfa71.css">
   </head>
   <body>
     <div id="app">
@@ -119,6 +119,13 @@
       const theme = sessionStorage.getItem('N_THEME')
       const color = theme === 'dark' ? '#000' : '#fff'
       spin.style.backgroundColor = color
+
+
+      // 获取ip jsonp方式
+      const ipCallback = (res) => {
+        window.currentIp = res ? res.ip : ''
+      }
     </script>
+    <script src="https://www.taobao.com/help/getip.php"></script>
   </body>
 </html>

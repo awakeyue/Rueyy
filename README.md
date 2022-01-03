@@ -1,5 +1,9 @@
 # Vue 3 + Typescript + Vite
 
+## todo
+
+- 天气图标地址 https://github.com/basmilius/weather-icons
+
 ## problem records
 
 - 如何单独将dist文件推送到一个新的分支（gh-pages）

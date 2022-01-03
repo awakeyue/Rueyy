@@ -25,11 +25,14 @@ import {
   NSelect,
   NTag,
   NForm,
-  NModal
+  NModal,
+  NDynamicInput,
+  NSkeleton,
+  NPopselect
 } from 'naive-ui'
 
 const naive = create({
-  components: [NConfigProvider,
+  components: [
     NButton,
     NCarousel,
     NMenu,
@@ -46,7 +49,10 @@ const naive = create({
     NSelect,
     NTag,
     NForm,
-    NModal
+    NModal,
+    NDynamicInput,
+    NSkeleton,
+    NPopselect
   ]
 })
 

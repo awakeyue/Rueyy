@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, inject } from 'vue'
 import AppHeader from '@cmp/layout/AppHeader.vue'
 import CardList from './components/CardList.vue'
 import SearchBox from './components/SearchBox.vue'
@@ -24,7 +24,6 @@ import {
   NLayoutContent,
   NLayoutFooter
 } from 'naive-ui'
-import { useStore } from 'vuex'
 export default defineComponent({
   name: 'Home',
   components: {
@@ -37,10 +36,10 @@ export default defineComponent({
     SearchBox
   },
   setup() {
-    const store = useStore()
+    const theme = inject('theme')
     return {
       width: 1200,
-      theme: computed(() => store.state.app.theme)
+      theme
     }
   }
 })

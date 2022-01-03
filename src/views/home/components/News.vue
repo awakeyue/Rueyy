@@ -1,5 +1,5 @@
 <template>
-   <n-carousel autoplay dot-placement="top" show-arrow>
+   <n-carousel autoplay show-arrow dot-placement="top">
      <template v-for="item in list">
        <div class="img-wrap">
          <img 
@@ -48,9 +48,6 @@ export default defineComponent({
   position: relative;
   .text {
     width: 100%;
-    position: absolute;
-    left: 0;
-    bottom: 0;
     cursor: pointer;
     background-color: rgba(255, 255, 255, .5);
     padding: 4px 10px;

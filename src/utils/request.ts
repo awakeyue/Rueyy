@@ -17,7 +17,7 @@ service.interceptors.request.use(config => {
 // 添加响应拦截器
 service.interceptors.response.use((response: any) => {
   if (response && response.status === 200) {
-    return response.data.data
+    return response.data
   } else {
     console.log('%c返回数据错误', 'background: red; color: #fff; padding: 2px 5px; border-radius: 2px')
     return Promise.reject('返回数据错误')

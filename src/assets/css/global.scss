@@ -1,5 +1,29 @@
+$like_color: #409eff;
 .flex-center {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.cp {
+  cursor: pointer;
+}
+
+.clickable {
+  cursor: pointer;
+  transition: color .3s;
+  &:hover {
+    color: $like_color;
+  }
+}
+
+// vue transition-group
+.list-enter-active,
+.list-leave-active {
+  transition: all .5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
 }

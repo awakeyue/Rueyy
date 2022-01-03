@@ -1,46 +1,40 @@
 <template>
    <div class="app-header">
      <m-logo /> 
-     <n-switch v-model:value="theme" :rail-style="railStyle">
-        <template #checked>light</template>
-        <template #unchecked>dark</template>
-      </n-switch>
+     <n-icon size="28" class="cp" @click="toggleTheme">
+      <transition name="component-fade" mode="out-in">
+        <component :is="componentId"></component>
+      </transition>
+    </n-icon>
    </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from 'vue'
+import { defineComponent, inject, ref, markRaw } from 'vue'
 import { useStore } from 'vuex'
+import { Sunny as SunIcon, Moon as MoonIcon } from '@vicons/ionicons5'
 import MLogo from '@cmp/layout/Logo.vue'
 export default defineComponent({
   name: 'AppHeader',
   components: {
-    MLogo
+    MLogo,
+    SunIcon,
+    MoonIcon
   },
   setup () {
     const store = useStore()
-    const theme = ref(store.state.app.theme !== 'dark')
-    watch(theme, val => {
-      console.log(val)
-      store.commit('SET_THEME', val ? 'light' : 'dark')
-    })
+    const theme: any = inject('theme')
+    const moonIcon = markRaw(MoonIcon)
+    const sunIcon = markRaw(SunIcon)
+    const componentId = ref(theme.value === 'light' ? moonIcon : sunIcon)
+    const toggleTheme = () => {
+      componentId.value = theme.value === 'dark' ? moonIcon : sunIcon
+      const value = theme.value === 'dark' ? 'light' : 'dark'
+      store.commit('SET_THEME', value)
+    }
     return {
-      theme,
-      railStyle: ({ focused, checked }: any) => {
-        const style: any = {}
-        if (checked) {
-          style.background = '#4098fc'
-          if (focused) {
-            style.boxShadow = '0 0 0 2px #d0305040'
-          }
-        } else {
-          style.background = '#333'
-          if (focused) {
-            style.boxShadow = '0 0 0 2px #2080f040'
-          }
-        }
-        return style
-      }
+      componentId,
+      toggleTheme
     }
   }
 })
@@ -53,5 +47,15 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.component-fade-enter-active,
+.component-fade-leave-active {
+  transition: all 0.5s ease;
+}
+
+.component-fade-enter-from,
+.component-fade-leave-to {
+  transform: translateY(-30px);
+  opacity: 0;
 }
 </style>

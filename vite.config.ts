@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => {
   const isDev = mode === 'development'
   return {
     plugins: [vue()],
-    // base: isDev ? '/' : '/blog-vite/',
+    // base: isDev ? '/' : '/blog-vite/', 如果部署到github要加仓库名
     base: '/',
     resolve: {
       alias: {

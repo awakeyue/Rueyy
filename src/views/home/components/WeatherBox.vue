@@ -38,12 +38,11 @@
          <n-icon class="more clickable"><forward-icon></forward-icon></n-icon>
        </span>
      </div>
-     
    </div>
 </template>
 
 <script lang="js">
-import { queryWeather } from '@/api/index'
+import { queryWeather, getLocation } from '@/api/index'
 import { LocationOutline as locIcon, ChevronForwardOutline as forwardIcon } from '@vicons/ionicons5'
 import { defineComponent, onMounted, reactive, computed, toRefs } from 'vue'
 import { useMessage } from 'naive-ui'
@@ -115,16 +114,17 @@ export default defineComponent({
     const state = reactive({
       weather: {}
     })
-    const city = (currentLocation && currentLocation.split('市')[0].split('省')[1]) || ''
     const getData = async () => {
       try {
-        const { data } = await queryWeather(city)
+        const locationInfo = await getLocation(window.currentIp) // 根据ip获取城市信息
+        const city = locationInfo ? locationInfo.city : '深圳'
+        const { data } = await queryWeather(city.replace('市', ''))
         state.weather = data
       } catch (error) {
         message.error('请求失败！')
       }
     }
-    onMounted(() => {
+    onMounted(async () => {
       getData()
     })
     return {

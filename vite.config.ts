@@ -8,7 +8,8 @@ export default defineConfig(({ mode }) => {
   const isDev = mode === 'development'
   return {
     plugins: [vue()],
-    base: isDev ? '/' : '/blog-vite/',
+    // base: isDev ? '/' : '/blog-vite/',
+    base: '/',
     resolve: {
       alias: {
         '@': resolve(__dirname, 'src'),

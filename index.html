@@ -110,19 +110,19 @@
         </svg>
       </div>
     </div>
-    <script type="module" src="/src/main.ts"></script>
     <script>
-      const spin = document.getElementById('spin')
-      const theme = sessionStorage.getItem('N_THEME')
-      const color = theme === 'dark' ? '#000' : '#fff'
-      spin.style.backgroundColor = color
-
-
       // 获取ip jsonp方式
       const ipCallback = (res) => {
         window.currentIp = res ? res.ip : ''
       }
     </script>
     <script src="https://www.taobao.com/help/getip.php"></script>
+    <script type="module" src="/src/main.ts"></script>
+    <script>
+      const spin = document.getElementById('spin')
+      const theme = sessionStorage.getItem('N_THEME')
+      const color = theme === 'dark' ? '#000' : '#fff'
+      spin.style.backgroundColor = color
+    </script>
   </body>
 </html>

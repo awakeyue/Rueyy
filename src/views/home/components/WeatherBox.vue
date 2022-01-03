@@ -58,7 +58,7 @@
         <n-tag class="clickable" style="margin-right: 10px;" v-for="(str, idx) in historyInputs" :key="idx" size="small" @click="city = str">{{str}}</n-tag>
       </div>
     </n-modal>
-    <n-modal v-model:show="showMore" preset="dialog" style="width: 80vw;" title="天气">
+    <n-modal v-model:show="showMore" preset="dialog" style="width: 90vw; min-width: 600px;" title="未来一周气温变化">
       <div id="chart" style="width: 100%; height: 600px;"></div>
     </n-modal>
   </div>

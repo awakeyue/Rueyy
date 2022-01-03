@@ -47,6 +47,7 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 20px;
 }
 .component-fade-enter-active,
 .component-fade-leave-active {

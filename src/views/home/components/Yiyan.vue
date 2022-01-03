@@ -96,7 +96,7 @@ export default defineComponent({
   }
   @media only screen and (max-width: 600px) {
     .sentence {
-      font-size: 16px;
+      font-size: 18px;
     }
   }
 }

@@ -1,21 +1,14 @@
 export function getTempOption(data: Array<any>) {
   return {
-    title: {
-      text: '未来一周气温变化'
-    },
     tooltip: {
-      trigger: 'axis'
+      trigger: 'axis',
     },
     legend: {},
     toolbox: {
       show: true,
       feature: {
-        dataZoom: {
-          yAxisIndex: 'none'
-        },
         dataView: { readOnly: false },
         magicType: { type: ['line', 'bar'] },
-        restore: {},
         saveAsImage: {}
       }
     },
@@ -34,13 +27,33 @@ export function getTempOption(data: Array<any>) {
       {
         name: '最高温度',
         type: 'line',
-        data: data.map((item: any) => item.highTemp)
+        data: data.map((item: any) => item.highTemp),
+        label: {
+          show: true
+        }
       },
       {
         name: '最低温度',
         type: 'line',
-        data: data.map((item: any) => item.lowTemp)
-      }
+        data: data.map((item: any) => item.lowTemp),
+        label: {
+          show: true
+        }
+      },
+      // {
+      //   name: '天气',
+      //   type: 'line',
+      //   data: data.map((item: any) => item.highTemp),
+      //   itemStyle: {
+      //     borderWidth: 0,
+      //   },
+      //   lineStyle: {
+      //     width: 0
+      //   },
+      //   label: {
+      //     show: true
+      //   }
+      // }
     ]
   }
 }

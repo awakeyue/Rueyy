@@ -94,5 +94,10 @@ export default defineComponent({
     position: relative;
     top: 2px;
   }
+  @media only screen and (max-width: 600px) {
+    .sentence {
+      font-size: 16px;
+    }
+  }
 }
 </style>

@@ -9,6 +9,7 @@
   "dependencies": {
     "animejs": "^3.2.1",
     "axios": "^0.24.0",
+    "echarts": "^5.2.2",
     "lodash": "^4.17.21",
     "three": "^0.135.0",
     "vue": "^3.2.26",

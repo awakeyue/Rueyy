@@ -8,7 +8,6 @@ import {
   // create naive ui
   create,
   // component
-  NConfigProvider,
   NButton,
   NCarousel,
   NMenu,

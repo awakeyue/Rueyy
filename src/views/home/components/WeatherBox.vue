@@ -75,6 +75,7 @@ import { defineComponent, onMounted, reactive, computed, toRefs, ref } from 'vue
 import { useMessage } from 'naive-ui'
 import echarts from '@/utils/charts'
 import { getTempOption } from '@/utils/chartsOptions'
+import { jsonpRequest } from '@/utils/common'
 import weatherIcon1 from '@/assets/svg/weather/clear-day.svg'
 import weatherIcon1Night from '@/assets/svg/weather/clear-night.svg'
 import weatherIcon2 from '@/assets/svg/weather/partly-cloudy-day.svg'
@@ -171,8 +172,8 @@ export default defineComponent({
       }
     }
 
-    const getCity = async () => {
-      const locationInfo = await getLocation(window.currentIp) // 根据ip获取城市信息
+    const getCity = async (ip) => {
+      const locationInfo = await getLocation(ip) // 根据ip获取城市信息
       return locationInfo ? locationInfo.city : '深圳'
     }
 
@@ -213,7 +214,8 @@ export default defineComponent({
     }
 
     onMounted(async () => {
-      const city = await getCity()
+      const ip = await jsonpRequest('ipCallback', 'https://www.taobao.com/help/getip.php')
+      const city = await getCity(ip)
       getData(city)
     })
     return {

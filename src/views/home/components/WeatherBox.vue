@@ -215,6 +215,7 @@ export default defineComponent({
 
     onMounted(async () => {
       const ip = await jsonpRequest('ipCallback', 'https://www.taobao.com/help/getip.php')
+      console.log(ip, '----')
       const city = await getCity(ip)
       getData(city)
     })

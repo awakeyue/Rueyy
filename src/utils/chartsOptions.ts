@@ -40,7 +40,7 @@ export function getTempOption(data: Array<any>) {
       {
         name: '天气',
         type: 'line',
-        data: data.map((item: any) => ({ name: item.weather, value: maxVal / 2 })),
+        data: data.map((item: any) => ({ name: item.weather, value: maxVal + 10 })),
         symbolSize: 0,
         itemStyle: {
           borderWidth: 0,

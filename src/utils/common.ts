@@ -31,7 +31,6 @@ export function getStorage(key: string, isLoc: boolean = true) {
 export function jsonpRequest(fnName: string, url: string) {
   return new Promise((resolve, reject) => {
     const script = document.createElement('script')
-    console.log(window, fnName)
     window[fnName] = function(res: any) {
       const currentIp = res ? res.ip : ''
       resolve(currentIp)

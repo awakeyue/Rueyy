@@ -58,8 +58,8 @@
         <n-tag class="clickable" style="margin-right: 10px;" v-for="(str, idx) in historyInputs" :key="idx" size="small" @click="city = str">{{str}}</n-tag>
       </div>
     </n-modal>
-    <n-modal v-model:show="showMore" preset="dialog" style="width: 90vw; min-width: 600px;" title="未来一周气温变化">
-      <div id="chart" style="width: 100%; height: 600px;"></div>
+    <n-modal v-model:show="showMore" preset="dialog" style="width: 90vw; " title="未来一周气温变化">
+      <div id="chart" style="width: 100%; height: 60vh;"></div>
     </n-modal>
   </div>
   <div class="weather-wrap" v-else>
@@ -213,11 +213,17 @@ export default defineComponent({
       chart.setOption(option)
     }
 
-    onMounted(async () => {
+    const getWeather = async () => {
       const ip = await jsonpRequest('ipCallback', 'https://www.taobao.com/help/getip.php')
-      console.log(ip, '----')
       const city = await getCity(ip)
       getData(city)
+    }
+
+    onMounted(() => {
+      getWeather()
+      setTimeout(() => { // 防止ip获取失败
+        !state.weather.cityname && getWeather()
+      }, 1000)
     })
     return {
       ...toRefs(state),

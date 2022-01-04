@@ -27,3 +27,18 @@ export function getStorage(key: string, isLoc: boolean = true) {
     return false
   }
 }
+
+export function jsonpRequest(fnName: string, url: string) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script')
+    window[fnName] = function(res: any) {
+      const currentIp = res ? res.ip : ''
+      resolve(currentIp)
+      delete window[fnName]
+      script.remove()
+    }
+    script.type = 'text/javascript'
+    script.src = url
+    document.getElementsByTagName('head')[0].appendChild(script)
+  })
+}

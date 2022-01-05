@@ -57,3 +57,7 @@
   ```
 
   然后换成了淘宝的https服务 https://www.taobao.com/help/getip.php, 调用方式是jsonp, callback名是ipCallback
+  
+ - github actions 持续集成（CI），自动打包
+ 
+  https://www.cnblogs.com/zhenfeng95/p/12843819.html

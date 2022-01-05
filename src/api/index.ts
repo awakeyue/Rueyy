@@ -43,7 +43,7 @@ export function getLocation(ip: string, type: number = 4) {
     params: {
       key: AMAP_KEY,
       ip,
-      type
+      type: ip.length > 16 ? 6 : 4
     }
   })
 }

@@ -32,3 +32,8 @@ jobs:
         run: |
           npm install
           npm run build
+      - name: Upload bundle
+        uses: actions/upload-artifact@master
+        with:
+          name: my_artifact_name # Upload artifact with name `dist`
+          path: dist # Upload content of `dist` folder

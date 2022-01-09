@@ -1,29 +1,38 @@
 <template>
-   <n-carousel autoplay show-arrow dot-placement="top">
-     <template v-for="item in list">
-       <div class="img-wrap">
-         <img 
-          class="carousel-img"
-          :src="item.image"
-        />
-        <div class="text" @click="toDetail(item)">
-          <n-ellipsis :line-clamp="2" >{{item.title}}</n-ellipsis>
-        </div>
-       </div>
-     </template>
-  </n-carousel>
+  <n-scrollbar style="max-height: 200px;" class="news" v-if="list && list.length">
+    <div id="newsList">
+      <div v-for="(item, index) in list" :key="index">
+        <n-space align="center">
+          <n-image width="60" :src="item.image" object-fit="cover"></n-image>
+          <n-ellipsis :line-clamp="2" style="max-width: 260px;">{{item.title}}</n-ellipsis> 
+        </n-space>
+      </div>
+    </div>
+  </n-scrollbar>
+  <div class="news" v-else>
+    <n-space>
+      <n-skeleton :height="100" :repeat="5" />
+    </n-space>
+  </div>
 </template>
 
 <script lang="js">
-import { defineComponent, ref, onMounted } from 'vue'
+import { defineComponent, ref, onMounted, nextTick } from 'vue'
 import { ysxw } from '@/api/index'
+import anime from 'animejs'
 export default defineComponent({
   name: 'News',
   setup () {
     const list = ref([])
     const getData = async () => {
       const data = await ysxw()
-      list.value = data.slice(0, 5)  
+      list.value = data
+      nextTick(() => {
+        anime({
+          targets: ['#newsList'],
+          
+        })
+      })
     }
     onMounted(() => {
       getData()
@@ -39,10 +48,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.carousel-img {
-  width: 100%;
-  height: 240px;
-  object-fit: cover;
+.news {
+  height: 200px;
+  overflow: hidden;
 }
 .img-wrap {
   position: relative;

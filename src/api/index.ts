@@ -1,5 +1,6 @@
 import axios from '@/utils/request'
 import { AMAP_KEY } from '@/config/index'
+const API = '/api' // 需代理的接口
 
 // 一言，来自https://api.muxiaoguo.cn/doc/yiyan.html
 export function yiyan() {
@@ -20,6 +21,17 @@ export function queryWeather(city: string = '深圳', type: number = 1) {
     params: {
       city,
       type
+    }
+  })
+}
+
+// 7日天气
+export function query7DayWeather(city: string = '深圳') {
+  return axios.request({
+    method: 'GET',
+    url: 'https://api.iyk0.com/7rtq/',
+    params: {
+      city
     }
   })
 }
@@ -57,5 +69,34 @@ export function queryWeather2(city: string) {
       key: AMAP_KEY,
       city
     }
+  })
+}
+
+// 获取音乐详情
+export function getMusicDetail(ids: string) {
+  return axios.request({
+    method: 'GET',
+    url: API + '/song/detail',
+    params: {
+      ids
+    }
+  })
+}
+
+// 获取热搜歌曲列表
+export function getHotSearch() {
+  return axios.request({
+    method: 'GET',
+    url: API + '/search/hot'
+  }).then((res: any) => {
+    return res.result.hots
+  })
+}
+
+// 网易云随机音乐
+export function getRandomMusic() {
+  return axios.request({
+    method: 'GET',
+    url: 'https://api.uomg.com/api/rand.music?sort=热歌榜&format=json'
   })
 }

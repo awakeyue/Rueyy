@@ -27,8 +27,14 @@ import {
   NModal,
   NDynamicInput,
   NSkeleton,
-  NPopselect
+  NPopselect,
+  NAlert,
+  NSlider,
+  NProgress,
+  NText,
+  NImage
 } from 'naive-ui'
+import { NScrollbar } from 'naive-ui/lib/_internal'
 
 const naive = create({
   components: [
@@ -51,7 +57,13 @@ const naive = create({
     NModal,
     NDynamicInput,
     NSkeleton,
-    NPopselect
+    NPopselect,
+    NAlert,
+    NSlider,
+    NProgress,
+    NText,
+    NImage,
+    NScrollbar
   ]
 })
 

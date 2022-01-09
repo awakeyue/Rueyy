@@ -69,7 +69,7 @@
 </template>
 
 <script lang="js">
-import { queryWeather, getLocation } from '@/api/index'
+import { queryWeather, getLocation, query7DayWeather } from '@/api/index'
 import { LocationOutline as locIcon, ChevronForwardOutline as forwardIcon } from '@vicons/ionicons5'
 import { defineComponent, onMounted, reactive, computed, toRefs, ref } from 'vue'
 import { useMessage } from 'naive-ui'
@@ -198,13 +198,13 @@ export default defineComponent({
 
     const viewMore = async () => {
       state.showMore = true
-      const { data } = await queryWeather(state.weather.cityname, 2)
+      const { data } = await query7DayWeather(state.weather.cityname)
       const list = data.map(item => {
         return {
-          date: item.day,
-          weather: item.weather,
-          highTemp: parseInt(item.celsius.replace('℃', '').split('/')[0]),
-          lowTemp: parseInt(item.celsius.replace('℃', '').split('/')[1])
+          date: item.date,
+          weather: item.wea,
+          highTemp: item.tem_day,
+          lowTemp: item.tem_night
         }
       })
       echarts.dispose(document.getElementById('chart'))

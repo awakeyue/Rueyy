@@ -1,13 +1,12 @@
 <template>
-  <div class="yiyan" >
-    <p class="sentence">
+  <div class="yiyan" v-if="wisdom.content">
+    <p class="sentence" >
       <span>
-        {{wisdom.content}}
-        <n-icon class="cp refresh" @click="changeSentence" :color="themeVars.primaryColor"><refresh-icon></refresh-icon></n-icon>
+        <span class="word" style="display: inline-flex;" v-for="(word, idx) in wisdom.content" :key="idx">{{word}}</span>
+        <n-icon class="cp refresh word" @click="changeSentence" :color="themeVars.primaryColor"><refresh-icon></refresh-icon></n-icon>
       </span>
     </p>
     <p class="source">{{wisdom.source}}</p>
-    <p id="write_box"></p>
   </div>
   <!-- <div v-else>
     <n-skeleton text :repeat="2" />
@@ -16,7 +15,7 @@
 </template>
 
 <script lang="js">
-import { defineComponent, onMounted, reactive, inject } from 'vue'
+import { defineComponent, onMounted, reactive, nextTick, toRefs } from 'vue'
 import { yiyan } from '@/api'
 import { Refresh as RefreshIcon } from '@vicons/ionicons5'
 import { useThemeVars } from 'naive-ui'
@@ -27,20 +26,33 @@ export default defineComponent({
     RefreshIcon
   },
   setup () {
-    const wisdom = reactive({
-      content: '',
-      source: ''
+    const state = reactive({
+      wisdom: {}
     })
 
     const getSentence = async () => {
+      state.wisdom = {}
       const { constant: sentence, source } = await yiyan()
-      wisdom.content = sentence
-      wisdom.source = '-- ' + source
-      anime({
-        targets: ['.sentence'],
-        opacity: [0, 1],
-        translateY: [20, 0],
-        duration: 2000
+      state.wisdom.content = sentence
+      state.wisdom.source = '-- ' + source
+      nextTick(() => {
+        const len = document.querySelectorAll('.sentence .word').length
+        anime({
+          targets: ['.sentence .word'],
+          opacity: [0, 1],
+          scale: [.5, 1],
+          translateY: [-50, 0],
+          delay: anime.stagger(50),
+          duration: len * 10,
+          easing: 'easeInOutQuad'
+        })
+        anime({
+          targets: ['.source'],
+          opacity: [0, 1],
+          translateX: [50, 0],
+          duration: 1000,
+          easing: 'easeInOutQuad'
+        })
       })
     }
 
@@ -54,18 +66,23 @@ export default defineComponent({
       anime({
         targets: ['.sentence'],
         opacity: 0,
-        translateY: [0, 20],
-        duration: 2000
-      })
-      setTimeout(() => {
+        translateX: [0, -80],
+        duration: 1000
+      }).finished.then(() => {
         getSentence()
-      }, 500)
+      })
+      anime({
+        targets: ['.source'],
+        opacity: 0,
+        translateX: [0, 20],
+        duration: 1000
+      })
     }
     onMounted(() => {
       getSentence()
     })
     return {
-      wisdom,
+      ...toRefs(state),
       themeVars: useThemeVars(),
       changeSentence
     }
@@ -75,7 +92,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .yiyan {
-  height: 150px;
+  height: 200px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;

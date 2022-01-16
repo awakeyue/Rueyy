@@ -12,7 +12,21 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/demos',
-    component: () => import('@/views/demos/index.vue')
+    name: 'demos',
+    redirect: '/demos/list',
+    component: () => import('@/views/demos/index.vue'),
+    children: [
+      {
+        path: 'list',
+        name: 'demoList',
+        component: () => import('@/views/demos/List.vue')
+      },
+      {
+        path: 'transitonGroup',
+        name: 'demoTransitonGroup',
+        component: () => import('@/views/demos/TransitionGroup.vue')
+      }
+    ]
   }
 ]
 

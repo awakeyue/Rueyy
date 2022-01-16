@@ -13,18 +13,6 @@ export function yiyan() {
   })
 }
 
-// 天气 type = 1 当天, 2 未来7天 3 8到15天
-export function queryWeather(city: string = '深圳', type: number = 1) {
-  return axios.request({
-    method: 'GET',
-    url: 'https://api.muxiaoguo.cn/api/tianqi',
-    params: {
-      city,
-      type
-    }
-  })
-}
-
 // 7日天气
 export function query7DayWeather(city: string = '深圳') {
   return axios.request({
@@ -61,7 +49,7 @@ export function getLocation(ip: string, type: number = 4) {
 }
 
 // 高德天气服务 city:城市adcode，实测城市名也行
-export function queryWeather2(city: string) {
+export function queryWeather(city: string) {
   return axios.request({
     method: 'GET',
     url: 'https://restapi.amap.com/v3/weather/weatherInfo',
@@ -69,6 +57,23 @@ export function queryWeather2(city: string) {
       key: AMAP_KEY,
       city
     }
+  }).then((res: any) => {
+    return res.lives[0]
+  })
+}
+
+// 高德地图获取行政单位
+export function queryDistracts(keywords: string) {
+  return axios.request({
+    method: 'GET',
+    url: 'https://restapi.amap.com/v3/config/district',
+    params: {
+      key: AMAP_KEY,
+      keywords,
+      subdistrict: 3,
+    }
+  }).then((res: any) => {
+    return res.districts[0].districts
   })
 }
 

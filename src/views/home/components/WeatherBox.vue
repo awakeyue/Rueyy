@@ -6,7 +6,7 @@
         <div class="l-bottom">
           <p>
             <span class="temp"
-              >{{ weather.temp || '0' }}<span class="unit">°C</span></span
+              >{{ weather.temperature || '0' }}<span class="unit">°C</span></span
             >
             <span class="wea">{{ weather.weather || '-' }}</span>
           </p>
@@ -14,53 +14,64 @@
       </div>
       <div class="right">
         <div class="r-item">
-          <p>{{ weather.WS || '-' }}</p>
-          <p class="r-item-label">{{ weather.WD || '风向' }}</p>
+          <p>{{ weather.winddirection || '-' }}</p>
+          <p class="r-item-label">风向</p>
         </div>
         <div class="r-item">
-          <p>{{ weather.SD || '-'  }}</p>
+          <p>{{ weather.windpower || '-' }}</p>
+          <p class="r-item-label">风速</p>
+        </div>
+        <div class="r-item">
+          <p>{{ weather.humidity || '-'  }}</p>
           <p class="r-item-label">湿度</p>
         </div>
         <div class="r-item">
           <p>{{ weather.pm25 || '-' }}</p>
           <p class="r-item-label">PM25</p>
         </div>
-        <div class="r-item">
-          <p>{{ weather.wse || '-' }}</p>
-          <p class="r-item-label">风速</p>
-        </div>
       </div>
     </div>
     <div class="bottom">
       <span>
-        <span class="clickable" title="更换城市" @click="changeWeatherCity"
-          ><n-icon size="10"><loc-icon /></n-icon>{{ weather.cityname || '无效城市' }}</span
+        <n-popconfirm
+          :show-icon="false"
+          @positive-click="handlePositiveClick"
+          @negative-click="handleNegativeClick"
+          negative-text="取消"
+          positive-text="确认"
         >
-        <span style="margin-left: 10px">{{ weather.time || '00:00' }}更新</span>
+          <template #trigger>
+            <span class="clickable" title="更换城市">
+              <n-icon size="10"><loc-icon /></n-icon>
+              {{ weather.city || '无效城市' }}
+            </span>
+          </template>
+          <n-space vertical>
+            <n-space>请选择城市</n-space>
+            <n-cascader
+              style="width: 240px;"
+              v-model:value="city"
+              placeholder="请选择城市"
+              :options="districtOptions"
+              :leaf-only="false"
+              label-field="name"
+              value-field="adcode"
+              children-field="districts"
+              :show-path="true"
+              clearable
+            />
+          </n-space>
+        </n-popconfirm>
+        <span style="margin-left: 10px">{{ (weather.reporttime && weather.reporttime.substr(11)) || '00:00' }}更新</span>
       </span>
       <span title="查看更多" @click="viewMore">
         <n-icon class="more clickable"><forward-icon></forward-icon></n-icon>
       </span>
     </div>
-
-    <n-modal
-      v-model:show="showCity"
-      :mask-closable="false"
-      preset="dialog"
-      title="更改城市"
-      positive-text="确认"
-      @positive-click="onPositiveClick"
-      @negative-click="onNegativeClick"
-      negative-text="算了"
-    >
-      <n-input placeholder="请输入城市名" v-model:value="city"></n-input>
-      <div style="margin-top: 10px;">
-        <n-tag class="clickable" style="margin-right: 10px;" v-for="(str, idx) in historyInputs" :key="idx" size="small" @click="city = str">{{str}}</n-tag>
-      </div>
-    </n-modal>
     <n-modal v-model:show="showMore" preset="dialog" style="width: 90vw; " title="未来一周气温变化">
       <div id="chart" style="width: 100%; height: 60vh;"></div>
     </n-modal>
+    
   </div>
   <div class="weather-wrap" v-else>
     <n-skeleton text :repeat="8" />
@@ -69,9 +80,10 @@
 </template>
 
 <script lang="js">
-import { queryWeather, getLocation, query7DayWeather } from '@/api/index'
+import { queryWeather, getLocation, query7DayWeather, queryDistracts } from '@/api/index'
 import { LocationOutline as locIcon, ChevronForwardOutline as forwardIcon } from '@vicons/ionicons5'
 import { defineComponent, onMounted, reactive, computed, toRefs, ref } from 'vue'
+import { setStorage, getStorage } from '@/utils/common'
 import { useMessage } from 'naive-ui'
 import echarts from '@/utils/charts'
 import { getTempOption } from '@/utils/chartsOptions'
@@ -137,11 +149,10 @@ export default defineComponent({
     const message = useMessage()
     const state = reactive({
       weather: {},
-      showCity: false,
       city: '',
       loading: false,
-      historyInputs: [],
-      showMore: false
+      showMore: false,
+      districtOptions: []
     })
 
     const weatherIcon = computed(() => {
@@ -160,8 +171,8 @@ export default defineComponent({
     const getData = async (city, msg = '没有查到天气信息') => {
       state.loading = true
       try {
-        const { data } = await queryWeather(city.replace('市', ''))
-        state.weather = data || { }
+        const data = await queryWeather(city.replace('市', ''))
+        state.weather = data || {}
         if (!data) {
           message.error(msg)
         }
@@ -177,23 +188,13 @@ export default defineComponent({
       return locationInfo ? locationInfo.city : '深圳'
     }
 
-    const changeWeatherCity = () => {
-      state.showCity = true
-      state.city = state.weather.cityname
-    }
-
-    const onPositiveClick = () => {
+    const handlePositiveClick = () => {
       state.weather = {}
       getData(state.city, '没有查到天气信息，请换一个城市试试')
-      state.showCity = false
-      if (!state.historyInputs.includes(state.city)) {
-        state.historyInputs.length === 5 && state.historyInputs.pop()
-        state.historyInputs.push(state.city)
-      }
     }
 
-    const onNegativeClick = () => {
-      state.showCity = false
+    const handleNegativeClick = () => {
+      
     }
 
     const viewMore = async () => {
@@ -219,8 +220,32 @@ export default defineComponent({
       getData(city)
     }
 
+    const formatData = data => {
+      if (!data.length) return
+      data.forEach(item => {
+        if (item.districts.length) {
+          formatData(item.districts)
+        } else {
+          delete item.districts
+        }
+      })
+    }
+
+    const getOptions = async () => {
+      let data = getStorage('DISTRICTS', false)
+      if (!data.length) {
+        data = await queryDistracts()
+        formatData(data)
+        if (data.length) {
+          setStorage('DISTRICTS', data, false)
+        }
+      }
+      state.districtOptions = data
+    }
+
     onMounted(() => {
       getWeather()
+      getOptions()
       setTimeout(() => { // 防止ip获取失败
         !state.weather.cityname && getWeather()
       }, 1000)
@@ -228,9 +253,8 @@ export default defineComponent({
     return {
       ...toRefs(state),
       weatherIcon,
-      onPositiveClick,
-      onNegativeClick,
-      changeWeatherCity,
+      handlePositiveClick,
+      handleNegativeClick,
       viewMore
     }
   }

@@ -1,5 +1,7 @@
 <template>
-   <router-view></router-view>
+  <n-scrollbar style="max-height: 100vh;">
+    <router-view></router-view>
+  </n-scrollbar>
 </template>
 
 <script lang="ts">

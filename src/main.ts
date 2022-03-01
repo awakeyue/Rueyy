@@ -34,7 +34,9 @@ import {
   NText,
   NImage,
   NCascader,
-  NPopconfirm
+  NPopconfirm,
+  NH1,
+  NP
 } from 'naive-ui'
 import { NScrollbar } from 'naive-ui/lib/_internal'
 
@@ -64,6 +66,8 @@ const naive = create({
     NSlider,
     NProgress,
     NText,
+    NH1,
+    NP,
     NImage,
     NScrollbar,
     NCascader,

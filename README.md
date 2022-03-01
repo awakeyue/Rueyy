@@ -61,3 +61,7 @@
  - github actions 持续集成（CI），自动打包
  
   https://www.cnblogs.com/zhenfeng95/p/12843819.html
+
+- vite 热更新不起作用
+
+  vue-router中引入的文件名大小写不一致所致

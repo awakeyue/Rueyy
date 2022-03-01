@@ -19,13 +19,13 @@ export default defineConfig(({ mode }) => {
       }
     },
     server: {
-      proxy: {
-        '/api': {
-          target: MUSIC_HOST,
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, '')
-        }
-      }
+      // proxy: {
+      //   '/api': {
+      //     target: MUSIC_HOST,
+      //     changeOrigin: true,
+      //     rewrite: (path) => path.replace(/^\/api/, '')
+      //   }
+      // }
     }
   }
 })

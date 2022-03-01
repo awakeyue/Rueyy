@@ -1,4 +1,5 @@
-export function getTempOption(data: Array<any>) {
+import { round } from 'lodash'
+export function getTempOption(data: any[]) {
   const highTempArr = data.map((item: any) => item.highTemp)
   const maxVal = Math.max(...highTempArr.filter(val => !isNaN(val)))
   return {
@@ -57,6 +58,39 @@ export function getTempOption(data: Array<any>) {
           borderColor: '#f59e0b',
           color: '#f59e0b'
         }
+      }
+    ]
+  }
+}
+
+export function getWaterChartOption({ waterProgress, progress, total }: {
+  waterProgress: number,
+  progress: number,
+  total: number
+}) {
+  return {
+    series: [
+        {
+          type: 'liquidFill',
+          data: [waterProgress], // 0-1
+          outline: {
+            show: false
+          }
+        },
+        {
+          type: 'pie',
+          zlevel: 0,
+          silent: true,
+          center: ['50%', '50%'],
+          radius: ['50%', '60%'],
+          color: ['#18a058', '#ccc'],
+          label: {
+            show: false,
+          },
+          labelLine: {
+            show: false,
+          },
+          data: [progress, total],
       }
     ]
   }

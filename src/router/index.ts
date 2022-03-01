@@ -25,6 +25,16 @@ const routes: Array<RouteRecordRaw> = [
         path: 'transitonGroup',
         name: 'demoTransitonGroup',
         component: () => import('@/views/demos/TransitionGroup.vue')
+      },
+      {
+        path: 'exerciseEveryday',
+        name: 'demoExerciseEveryday',
+        component: () => import('@/views/demos/exerciseEveryday/index.vue')
+      },
+      {
+        path: 'exerciseEverydayDetail',
+        name: 'demoExerciseEverydayDetail',
+        component: () => import('@/views/demos/exerciseEveryday/Detail.vue')
       }
     ]
   }

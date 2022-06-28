@@ -32,9 +32,9 @@ export default defineComponent({
 
     const getSentence = async () => {
       state.wisdom = {}
-      const { constant: sentence, source } = await yiyan()
-      state.wisdom.content = sentence
-      state.wisdom.source = '-- ' + source
+      const res = await yiyan()
+      state.wisdom.content = res
+      // state.wisdom.source = '-- ' + source
       nextTick(() => {
         const len = document.querySelectorAll('.sentence .word').length
         anime({
@@ -46,13 +46,13 @@ export default defineComponent({
           duration: len * 10,
           easing: 'easeInOutQuad'
         })
-        anime({
-          targets: ['.source'],
-          opacity: [0, 1],
-          translateX: [50, 0],
-          duration: 1000,
-          easing: 'easeInOutQuad'
-        })
+        // anime({
+        //   targets: ['.source'],
+        //   opacity: [0, 1],
+        //   translateX: [50, 0],
+        //   duration: 1000,
+        //   easing: 'easeInOutQuad'
+        // })
       })
     }
 

@@ -6,10 +6,10 @@ const API = '/api' // 需代理的接口
 export function yiyan() {
   return axios.request({
     method: 'GET',
-    url: 'https://api.muxiaoguo.cn/api/yiyan',
+    url: 'https://api.iyk0.com/gsyy/',
     params: {}
   }).then(res => {
-    return res.data
+    return res
   })
 }
 

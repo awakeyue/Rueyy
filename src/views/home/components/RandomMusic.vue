@@ -141,7 +141,7 @@ export default defineComponent({
 
     const onError = (e: any) => {
       console.log(e)
-      getData()
+      getData(true)
     }
     const onTimeUpdate = (e: any) => {
       state.time.current = parseInt(e.target.currentTime)
